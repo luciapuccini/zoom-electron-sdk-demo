@@ -12,9 +12,58 @@
         document.getElementsByTagName('head')[0].appendChild(link);
       })();
     </script>
+    <script>
+      const { ipcRenderer } = require('electron');
+
+      function sendstart(meetingnum, zoomaccesstoken, username) {
+        ipcRenderer.send(
+          'asynchronous-message',
+          'startunlogin',
+          meetingnum,
+          zoomaccesstoken,
+          username
+        );
+      }
+      function dostart() {
+        let meetingnum = document.getElementById('startmeetingnum').value;
+        let zoomaccesstoken = document.getElementById('zoomaccesstoken').value;
+        let username = document.getElementById('username').value;
+        sendstart(meetingnum, zoomaccesstoken, username);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <div class="center">
+      <input
+        type="text"
+        name="startmeetingnum"
+        placeholder="input meeting number"
+        id="startmeetingnum"
+      />
+    </div>
+    <br />
+    <div class="center">
+      <input
+        type="text"
+        name="zoomaccesstoken"
+        placeholder="input zoom access token"
+        id="zoomaccesstoken"
+      />
+    </div>
+    <br />
+    <div class="center">
+      <input
+        type="text"
+        name="userName"
+        placeholder="input user name"
+        id="username"
+      />
+    </div>
+    <br />
+    <div class="center">
+      <button type="button" onclick="dostart()">Start</button>
+    </div>
     <script>
       if (typeof process === 'object') {
         const scripts = [];
